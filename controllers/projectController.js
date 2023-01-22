@@ -3,15 +3,23 @@ const  jsonHelper=require('../helpers/jsonHelper');
 const {  validationResult } = require('express-validator');
 
     exports.index=(req,res,next)=>{
-       Project.find()
-           .populate('userId')
-           .then(projects=>{
-               res.status(200).json(jsonHelper.returnSuccess("got successfully",projects))
-           })
-           .catch(err=> {
-                   res.status(500).json(jsonHelper.returnError(err.message));
-               }
-           );
+        const page =req.query.page ||1;
+        const perPage=20;
+        let total;
+        Project.countDocuments()
+            .then(count=>{
+                total=count;
+                return Project.find()
+                    .populate('userId')
+                    .skip((page-1)*perPage)
+                    .limit(perPage)
+            })
+            .then(projects=>{
+                res.status(200).json(jsonHelper.returnSuccess("got successfully",{projects:projects,total:total}))
+            })
+            .catch(err=>{
+                res.status(err.status||500).json(jsonHelper.returnError(err.message));
+            });
     };
 
     exports.show=(req,res,next)=>{
@@ -30,20 +38,22 @@ const {  validationResult } = require('express-validator');
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(422).json(jsonHelper.returnError('invalid inputs',errors.array()));
         }
         if(!req.file){
             res.status(422).json(jsonHelper.returnError("the cover is required"));
 
         }
+        console.log(req.body);
         req.body.cover=req.file.path;
+
         const project=new Project(req.body);
-        console.log(project);
+
         project.save().then(result=>{
             console.log(result);
             res.status(200).json(jsonHelper.returnSuccess("saved successfully",result));
         }).catch(err=>{
-            res.status(500).json(jsonHelper.returnError(err.message));
+            res.status(err.status||500).json(jsonHelper.returnError(err.message));
         });
 
     };

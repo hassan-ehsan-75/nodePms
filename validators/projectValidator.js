@@ -1,5 +1,6 @@
 const { check } = require('express-validator');
 
+const User = require('../models/user');
 const multer = require('multer');
 
 const fileStorage=multer.diskStorage({
@@ -12,11 +13,20 @@ const fileStorage=multer.diskStorage({
 })
 const fileFilter =(req,file,callback)=>{
     if(['image/png','image/jpg','image/jpeg'].includes(file.mimetype)){
-        console.log(req.body);
-        callback(null,true);
+        User.findById('63c6b50aeb3c1bba7cf7fca9')
+            .then(user=>{
+                req.body.userId=user;
+
+                console.log("user_success:",user.name);
+                callback(null,true);
+            })
+            .catch(err=> {
+                    console.log("user_error:",err);
+                }
+            );
+
     }else {
         console.log('false');
-
         callback(null,false);
     }
 };

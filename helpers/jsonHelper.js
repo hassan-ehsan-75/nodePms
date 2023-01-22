@@ -5,9 +5,10 @@ exports.returnSuccess=(message,data)=>{
         'data':data
     }
 };
-exports.returnError=(message)=>{
+exports.returnError=(message,data)=>{
     return {
         'status':-1,
         'message':message,
+        'data':data||[]
     }
 };

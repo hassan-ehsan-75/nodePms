@@ -20,9 +20,17 @@ const userSchema=new Schema({
     },
     is_admin:{
         type:Number,
-        required:true
+        default: 0
     },
+    projects:{
+        type:Schema.Types.ObjectId,
+        ref:'Project'
+    }
 });
 
-
+userSchema.methods.toJSON = function() {
+    let obj = this.toObject();
+    delete obj.password;
+    return obj;
+}
 module.exports = mongoose.model('User',userSchema);
