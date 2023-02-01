@@ -1,5 +1,5 @@
 const  Project=require('../models/project');
-const  jsonHelper=require('../helpers/jsonHelper');
+const  jsonHelper=require('../util/helpers/jsonHelper');
 const {  validationResult } = require('express-validator');
 
     exports.index=(req,res,next)=>{

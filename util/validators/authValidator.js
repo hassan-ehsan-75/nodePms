@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 const multer = require('multer');
-const User = require('../models/user');
+const User = require('../../models/user');
 
 const fileStorage=multer.diskStorage({
     destination:(req,file,callback)=>{

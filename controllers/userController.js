@@ -1,5 +1,5 @@
 const  User=require('../models/user');
-const  jsonHelper=require('../helpers/jsonHelper');
+const  jsonHelper=require('../util/helpers/jsonHelper');
 
 
     exports.index=(req,res,next)=>{

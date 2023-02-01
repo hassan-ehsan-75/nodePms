@@ -32,5 +32,13 @@ userSchema.methods.toJSON = function() {
     let obj = this.toObject();
     delete obj.password;
     return obj;
-}
+};
+userSchema.methods.toUserType = function() {
+    let obj = this.toObject();
+    obj._id=obj._id.toString();
+    delete obj.password;
+    delete obj.projects;
+    delete obj.__v;
+    return obj;
+};
 module.exports = mongoose.model('User',userSchema);

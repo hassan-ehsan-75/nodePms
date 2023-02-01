@@ -1,5 +1,5 @@
 const  User=require('../models/user');
-const  jsonHelper=require('../helpers/jsonHelper');
+const  jsonHelper=require('../util/helpers/jsonHelper');
 const bcrypt=require('bcryptjs');
 const {  validationResult } = require('express-validator');
 const jwt =require('jsonwebtoken');
