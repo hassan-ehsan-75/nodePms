@@ -16,6 +16,15 @@ const setupGraphQl=function (app) {
                 user:request.user,
                 isAuthenticated: request.user && request.user._id > 0
             }
+        },
+        customFormatErrorFn(error){
+            if(!error.originalError){
+                return error;
+            }
+
+            const message =error.message||'An error occurred!';
+            const code =error.originalError.code || 500;
+            return {message:message,code:code,status:-1};
         }
     })));
 }
