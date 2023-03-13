@@ -3,6 +3,7 @@
 const { GraphQLInt, GraphQLString, GraphQLList } = require('graphql');
 //Custom Types
 const {UserType,UserLoginType,UserGenderType} =require('./types');
+const {GeneralStringType} =require('../StringType');
 //Resolver:Controller
 const { createUser, updateUser, deleteUser } = require('../../../controllers/graphql/userResolver');
 
@@ -56,4 +57,14 @@ exports.updateUser = {
         },
     },
     resolve: updateUser
+};
+exports.deleteUser = {
+    type: GeneralStringType,
+    args:{
+        _id:{
+            name:'_id',
+            type:GraphQLString
+        }
+    },
+    resolve: deleteUser
 };

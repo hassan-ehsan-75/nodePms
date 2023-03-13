@@ -4,6 +4,7 @@ const jwt =require('jsonwebtoken');
 const serverConfig =require('../../util/config/server_config');
 const User =require('../../models/user');
 
+
 //Get ALL
 exports.getAll=async (parentValue,{},{auth},req)=> {
     console.log(req);
@@ -90,6 +91,27 @@ exports.updateUser=async (parentValue,args) =>{
     console.log(user);
 
     return {...user.toUserType(),_id:user._id.toString()};
+
+
+};
+
+
+
+exports.deleteUser=async (parentValue,args) =>{
+
+    let user= await User.findOne({_id:args._id});
+
+    if (!user){
+        const error= new Error(`user not found`);
+        error.code=404;
+        throw error;
+
+    }
+
+    await user.deleteOne();
+    console.log(user);
+
+    return {message:'تم الحذف',status:1};
 
 
 };
