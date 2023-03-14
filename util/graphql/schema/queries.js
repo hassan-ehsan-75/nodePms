@@ -4,6 +4,7 @@ const { GraphQLObjectType } =require('graphql');
 // App Imports
 const user =require( '../../../models/graphql/user/query');
 const plant =require( '../../../models/graphql/plant/query');
+const category =require( '../../../models/graphql/category/query');
 
 // Query
 const query = new GraphQLObjectType({
@@ -12,6 +13,7 @@ const query = new GraphQLObjectType({
     fields: () => ({
         ...user,
         ...plant,
+        ...category,
     })
 });
 

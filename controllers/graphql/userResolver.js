@@ -3,7 +3,7 @@ const bcrypt =require('bcryptjs');
 const jwt =require('jsonwebtoken');
 const serverConfig =require('../../util/config/server_config');
 const User =require('../../models/user');
-
+const validation=require('../../util/graphql/validators/userValidator');
 
 //Get ALL
 exports.getAll=async (parentValue,{},{auth},req)=> {
@@ -49,7 +49,11 @@ exports.login=async (parentValue,{...args}) =>{
 
 // create user
 exports.createUser=async (parentValue,args) =>{
-
+    try {
+       await validation.createUserValidator.validate(args);
+    }catch (err){
+        throw err;
+    }
     let user= await User.findOne({email:args.email});
 
     if (user){
