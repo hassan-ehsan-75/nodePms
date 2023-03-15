@@ -4,6 +4,7 @@ const categoryType=new GraphQLObjectType({
     name:"category",
     description:"Category Type",
     fields:()=>({
+        _id:{type:GraphQLString},
         name:{type:GraphQLString},
     })
 });
