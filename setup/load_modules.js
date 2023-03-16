@@ -5,7 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors =require('cors');
-
+const multer = require('multer');
 //others
 const { NODE_ENV } =require( '../util/config/env');
 
@@ -20,7 +20,22 @@ const setup=function (app) {
     }else{
         app.use(logger('combined'));
     }
+    const fileStorage=multer.diskStorage({
+        destination:(req,file,cb)=>{
+            cb(null,req.body.path);
+        },
+        filename:(req,file,cb)=>{
+            cb(null,Math.floor(Date.now() / 1000)+'.'+file.mimetype.substr(file.mimetype.lastIndexOf('/')+1));
+        },
 
+    });
+    const fileFilter = (req, file, cb) => {
+        if(['image/png','image/jpg','image/jpeg','video/mp4'].includes(file.mimetype)){
+            cb(null,true);
+        }else {
+            cb(null, false);
+        }
+    };
     app.use(cors());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }))
@@ -31,9 +46,11 @@ const setup=function (app) {
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         next();
     });
-
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.static(path.join(__dirname, 'cdn')));
+    app.use(express.static(path.join(__dirname, 'cdn/uploads')));
+    app.use(  multer({ storage: fileStorage, fileFilter: fileFilter }).single('attachment'));
+
 
 
 };

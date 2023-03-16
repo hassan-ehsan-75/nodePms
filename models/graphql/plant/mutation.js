@@ -1,4 +1,4 @@
-const {GraphQLString,GraphQLList}=require('graphql');
+const {GraphQLString,GraphQLFloat}=require('graphql');
 
 
 const {PlantType} =require('./types');
@@ -14,6 +14,14 @@ exports.createPlant={
         },
         description:{
             name:'description',
+            type:GraphQLString,
+        },
+        price:{
+            name:'price',
+            type:GraphQLFloat,
+        },
+        category_id:{
+            name:'category_id',
             type:GraphQLString,
         }
     },
@@ -33,6 +41,14 @@ exports.updatePlant={
         },
         description:{
             name:'description',
+            type:GraphQLString,
+        },
+        price:{
+            name:'price',
+            type:GraphQLFloat,
+        },
+        category_id:{
+            name:'category_id',
             type:GraphQLString,
         }
     },
