@@ -1,5 +1,4 @@
 const Plant=require('../../models/plant');
-const { validator, validate } = require('graphql-validation'); // Import module
 const Category =require('../../models/category');
 
 module.exports.getAll=async (parentValue,{})=>{
