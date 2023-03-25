@@ -15,4 +15,18 @@ const PlantType=new GraphQLObjectType({
     })
 });
 
-module.exports={PlantType};
+const PlantStageType=new GraphQLObjectType({
+    name:'plantStage',
+    description:'Plant Stage Type',
+    fields:()=>({
+        _id:{type:GraphQLString},
+        title:{type:GraphQLString},
+        description:{type:GraphQLString},
+        attachment:{type:GraphQLString},
+        order:{type:GraphQLInt},
+        plant:{type:PlantType},
+
+    })
+});
+
+module.exports={PlantType,PlantStageType};
