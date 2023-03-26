@@ -7,6 +7,7 @@ const plant =require( '../../../models/graphql/plant/mutation');
 const category =require( '../../../models/graphql/category/mutation');
 const post =require( '../../../models/graphql/post/mutation');
 const crop =require( '../../../models/graphql/crop/mutation');
+const insecticide =require( '../../../models/graphql/insecticide/mutation');
 
 // Query
 const mutation = new GraphQLObjectType({
@@ -17,6 +18,7 @@ const mutation = new GraphQLObjectType({
         ...plant,
         ...category,
         ...crop,
+        ...insecticide,
     })
 });
 

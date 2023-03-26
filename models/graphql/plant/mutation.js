@@ -94,8 +94,8 @@ exports.AddPlantStage={
     resolve:addPlantStage
 };
 
-exports.updatePlant={
-    type:PlantType,
+exports.updatePlantStage={
+    type:PlantStageType,
     args:{
         _id:{
             name:'_id',
@@ -121,7 +121,7 @@ exports.updatePlant={
     resolve:updatePlantStage
 };
 
-exports.deletePlant={
+exports.deletePlantStage={
     type:GeneralStringType,
     args:{
         _id:{
