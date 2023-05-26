@@ -1,0 +1,14 @@
+.bodyRtl{
+  direction: rtl;
+}
+.icon_home{
+  font-size: 6rem;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.header-curved{
+  border-bottom-left-radius: 7rem;
+  border-bottom-right-radius: 7rem;
+}
