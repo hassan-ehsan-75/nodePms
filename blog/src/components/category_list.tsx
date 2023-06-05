@@ -1,4 +1,4 @@
-export default function CategoryList(props) {
+export default function CategoryList() {
      return (
        <div>
 

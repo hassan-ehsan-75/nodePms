@@ -1,5 +1,6 @@
 'use client'
-import styles from '../page.module.css'
+import * as React from "react";
+import styles from './page.module.css'
 import {Container} from "@mui/material";
 export const metadata = {
     title: 'Categories',
