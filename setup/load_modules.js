@@ -20,9 +20,14 @@ const setup=function (app) {
     }else{
         app.use(logger('combined'));
     }
+
+    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static( 'public'));
+    app.use(express.static(path.join(__dirname, 'cdn')));
+    app.use("/cdn",express.static('cdn'));
     const fileStorage=multer.diskStorage({
         destination:(req,file,cb)=>{
-            cb(null,req.body.path);
+            cb(null,'cdn/uploads');
         },
         filename:(req,file,cb)=>{
             cb(null,Math.floor(Date.now() / 1000)+'.'+file.mimetype.substr(file.mimetype.lastIndexOf('/')+1));
@@ -46,9 +51,6 @@ const setup=function (app) {
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         next();
     });
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.use(express.static(path.join(__dirname, 'cdn')));
-    app.use(express.static(path.join(__dirname, 'cdn/uploads')));
     app.use(  multer({ storage: fileStorage, fileFilter: fileFilter }).single('attachment'));
 
 

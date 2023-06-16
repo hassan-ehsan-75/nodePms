@@ -11,7 +11,11 @@ exports.createCategory={
         name:{
             type:GraphQLString,
             name:"name"
-        }
+        },
+        image:{
+            type:GraphQLString,
+            name:"image"
+        },
     },
     resolve:create
 };
@@ -26,6 +30,10 @@ exports.updateCategory={
         name:{
             type:GraphQLString,
             name:"name"
+        },
+        image:{
+            type:GraphQLString,
+            name:"image"
         }
     },
     resolve:update

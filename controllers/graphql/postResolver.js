@@ -5,6 +5,16 @@ exports.getAll=async (parentValue,{})=>{
   return await Post.find().populate('category');
 };
 
+exports.getPostsByCategory=async (parentValue,{category_id})=>{
+    console.log(category_id);
+    console.log("post by cat");
+  return await Post.where({category:category_id});
+};
+exports.getPostsById=async (parentValue,{post_id})=>{
+    console.log(post_id);
+  return await Post.findOne({_id:post_id});
+};
+
 exports.create=async (parentValue,{title, description,category_id})=>{
       const category=await Category.findOne({_id:category_id});
       if (!category){

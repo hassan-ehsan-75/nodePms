@@ -6,6 +6,7 @@ const categoryType=new GraphQLObjectType({
     fields:()=>({
         _id:{type:GraphQLString},
         name:{type:GraphQLString},
+        image:{type:GraphQLString},
     })
 });
 
