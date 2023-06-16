@@ -15,14 +15,14 @@ exports.getPostsById=async (parentValue,{post_id})=>{
   return await Post.findOne({_id:post_id});
 };
 
-exports.create=async (parentValue,{title, description,category_id})=>{
+exports.create=async (parentValue,{title, description,category_id,attachment})=>{
       const category=await Category.findOne({_id:category_id});
       if (!category){
           const error=new Error('الفئة غير موجوده');
           error.code=404;
           throw error;
       }
-      let post=new Post({title:title,description:description,category:category});
+      let post=new Post({title:title,description:description,category:category,attachment:attachment});
       await post.save();
       return {...post.toPostType()};
 };

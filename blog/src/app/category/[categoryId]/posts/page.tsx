@@ -1,11 +1,13 @@
 
 'use client'
+import CreateWithModalButton from "../../../../components/CreateWithModalButton";
 import PostList from "../../../../components/post/category_list";
 import * as React from "react";
 import styles from '../../page.module.css'
 import {Container} from "@mui/material";
 import {useState, useEffect} from "react";
 import {BASE_URL} from "../../../Constants";
+import CreateForm from "../../../../components/post/CreateForm";
 
 
 
@@ -55,6 +57,11 @@ export default function Posts({params}) {
 
         <main className={styles.main}>
             <Container>
+                <div className="p-1 sm:p-8">
+                    <CreateWithModalButton styles={{width:"50%",margin:"1rem",padding:"1rem"}} show={true} title="اضافة مقاله">
+                        <CreateForm cat_id={categoryId} edit={true}  create={true} />
+                    </CreateWithModalButton>
+                </div>
                 <PostList items={posts} category={categoryId}/>
             </Container>
         </main>

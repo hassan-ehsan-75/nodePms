@@ -18,6 +18,10 @@ exports.createPost={
             name:"category_id",
             type:GraphQLString
         },
+        attachment:{
+            name:"attachment",
+            type:GraphQLString
+        },
     },
     resolve:create
 };
@@ -34,6 +38,10 @@ exports.updatePost={
         },
         description:{
             name:"description",
+            type:GraphQLString
+        },
+        attachment:{
+            name:"attachment",
             type:GraphQLString
         },
         category_id:{

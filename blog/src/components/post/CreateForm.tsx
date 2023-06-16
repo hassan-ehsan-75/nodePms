@@ -1,23 +1,24 @@
-import React, {useRef} from 'react';
+import React, {useRef,useState} from 'react';
 import PrimaryButton from "../../components/PrimaryButton";
 import CustomInput from "../CustomInput";
 import Alert from "@mui/material/Alert/Alert";
 import Snackbar from "@mui/material/Snackbar/Snackbar";
 import {BASE_URL, UPLOAD_URL} from "../../app/Constants";
 import axios from "axios";
-import {apiClient, CreateCategory} from "../../Util/apolloClient";
+import {apiClient, CreateCategory, CreatePost} from "../../Util/apolloClient";
 
-const CreateForm = ({edit, create, currentCat}: { edit: boolean, create: boolean, currentCat: object }) => {
+const CreateForm = ({edit, create, cat_id}: { edit: boolean, create: boolean, cat_id: string }) => {
 
     const url = create ? 'createCategory' : 'updateCategory';
     const submitBtn = useRef('save');
-    const [openSnack, setOpen] = React.useState(false);
-    const [alertMessage, setAlertMessage] = React.useState("تم الحفظ");
-    const [alertType, setAlertType] = React.useState("info");
-    const [name, setName] = React.useState("");
-    const [image, setImage] = React.useState(null);
-    const [imageUrl, setImageUrl] = React.useState('');
-    const [processing, setProcessing] = React.useState(false);
+    const [openSnack, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("تم الحفظ");
+    const [alertType, setAlertType] = useState("info");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const [processing, setProcessing] = useState(false);
 
     const handleCloseSnack = (event, reason) => {
         if (reason === 'clickaway') {
@@ -77,10 +78,12 @@ const CreateForm = ({edit, create, currentCat}: { edit: boolean, create: boolean
         try {
             setProcessing(true);
             apiClient.mutate({
-                mutation: CreateCategory,
+                mutation: CreatePost,
                 variables: {
                     name: name,
                     image: imageUrl,
+                    desc: description,
+                    category_id: cat_id,
                 },
             }).then(response => {
                 setAlertMessage('تم الحفظ');
@@ -106,14 +109,18 @@ const CreateForm = ({edit, create, currentCat}: { edit: boolean, create: boolean
     return (
 
         <form onSubmit={submit}>
-            <div className="grid lg:grid-cols-2 sm:gap-1 sm:grid-cols-1 mx-auto">
+            <div className="grid lg:grid-cols-1 sm:gap-1 sm:grid-cols-1 mx-auto">
 
-                <CustomInput title="الاسم" type="text" val={name} valName='name'
+                <CustomInput title="العنوان" type="text" val={name} valName='name'
                              placeholder='0'
                              required={true}
                              edit={edit}
                              handleInputChange={setName}/>
-                <div className="col-span-2 grid grid-cols-2 gap-1 mt-2">
+                <CustomInput title="الوصف" type="textarea" val={name} valName='name'
+                             placeholder='0'
+                             required={true}
+                             edit={edit}
+                             handleInputChange={setDescription}/>
                     <div>
                         <label className="font-semibold mb-1 mt-2 block font-medium text-black dark:text-white">
                             الصورة
@@ -127,7 +134,6 @@ const CreateForm = ({edit, create, currentCat}: { edit: boolean, create: boolean
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-4 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
 
                         />
-                    </div>
                 </div>
 
 
